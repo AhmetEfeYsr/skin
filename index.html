@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ten Rengi Eşleştirici</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Rubik', sans-serif;
+      background: linear-gradient(to bottom, #120a8f , #dcecf4);
+      color: #343a40;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-weight: 700;
+      color: #dcecf4;
+    }
+
+    h2 {
+      font-weight: 700;
+      color: #120a8f;
+    }
+
+    p {
+      color: #343a40;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header p {
+      color: #120a8f;
+    }
+
+    main {
+      max-width: 840px;
+      margin: auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .file-input {
+      display: inline-block;
+      padding: 0.75rem 1.2rem;
+      background: #120a8f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 1rem;
+    }
+
+    .file-input:hover { background: #221a9f; }
+    .file-input input { display: none; }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      background: #120a8f;
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .btn:hover:not(:disabled) { background: #221a9f; }
+    .btn:disabled {
+      background: #ced4da;
+      cursor: not-allowed;
+    }
+
+    #preview-section, #result-section {
+      margin-top: 2.5rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+
+    #preview {
+      max-width: 240px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #confirm-btn {
+      margin-top: 1rem;
+    }
+
+    #color-swatch {
+      width: 72px;
+      height: 72px;
+      margin: 1rem 0;
+      border-radius: 50%;
+      border: 3px solid #dee2e6;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding: 2rem;
+      background: transparent;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #6c757d;
+      border-top: none;
+    }
+
+    .github-logo {
+      width: 48px;
+      height: 48px;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+
+    .github-logo:hover {
+      opacity: 1;
+    }
+
+    #intro-section, #technical-details {
+      width: 100%;
+      max-width: 800px;
+      margin: 2rem 0;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      text-align: left;
+    }
+
+    #coffee-button {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 999;
+      cursor: pointer;
+      transform: scale(0.85);
+      transform-origin: top left;
+    }
+
+    #coffee-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    #coffee-popup-close {
+      position: absolute;
+      top: 10px;
+      right: 16px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #dc3545;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="coffee-button" onclick="document.getElementById('coffee-popup').style.display='block'">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px;">
+  </div>
+
+  <div id="coffee-popup">
+    <span id="coffee-popup-close" onclick="document.getElementById('coffee-popup').style.display='none'">&times;</span>
+    <p>Üniversite için hazırlanırken projeler geliştiriyorum bana ve projelerime destek olursanız sevinirim ♥</p>
+    <div>
+      <script
+        type="text/javascript"
+        src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+        data-name="bmc-button"
+        data-slug="ProfPotato"
+        data-color="#FFDD00"
+        data-emoji=""
+        data-font="Lato"
+        data-text="Buy me a coffee"
+        data-outline-color="#000000"
+        data-font-color="#000000"
+        data-coffee-color="#ffffff"
+      ></script>
+    </div>
+  </div>
+
+  <header>
+    <h1>Ten Rengini Eşle</h1>
+  </header>
+
+  <main>
+    <section id="intro-section">
+      <h2>Fotoğrafınız Nasıl Olmalı:</h2>
+      <p>Hesaplanacak rengin olabildiğince doğru olması için fotoğrafnız üzerinde herhangi bir oynama yapılmamış olmalı ve mümkünse beyaz ışık altında çekilmiş olmalı. Ten renginiz yüzünüzün alın bölgesinde daha net olacağından alın yanak gibi bölgeler makyajsız ve açıkça görünüyor olmalı. Fotoğrafınız python sunucuları haricinde hiç bir yere gönderilmeyecektir veya depolanmayacaktır</p>
+    </section>
+
+    <form id="upload-form">
+      <label class="file-input">
+        Fotoğraf Seç
+        <input type="file" accept="image/*" id="photo-input" required />
+      </label>
+    </form>
+
+    <div id="preview-section">
+      <h2>Önizleme</h2>
+      <img id="preview" alt="Yüklenmiş fotoğraf önizlemesi" />
+      <button class="btn" id="confirm-btn" disabled>Onayla</button>
+    </div>
+
+    <section id="result-section">
+      <h2>En Yakın Ten Tonu</h2>
+      <div id="color-swatch"></div>
+      <p id="color-name"></p>
+    </section>
+
+    <section id="technical-details">
+      <h2>Teknik Detaylar</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam accumsan sem at magna ullamcorper, sit amet fermentum orci facilisis. Vivamus nec massa ut justo sollicitudin varius.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/AhmetEfeYSR" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" class="github-logo">
+    </a>
+    <p>Github hesabıma bu logodan ulaşarak profilimdeki diğer projelere bakabilirsiniz. (bu ilk projem girdiğinizde profil boş olabilir)</p>
+  </footer>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const fileInput = document.getElementById('photo-input');
+  const previewSection = document.getElementById('preview-section');
+  const preview = document.getElementById('preview');
+  const confirmBtn = document.getElementById('confirm-btn');
+  const resultSection = document.getElementById('result-section');
+  const colorSwatch = document.getElementById('color-swatch');
+  const colorName = document.getElementById('color-name');
+
+  let selectedFile = null;
+
+  fileInput.addEventListener('change', () => {
+    selectedFile = fileInput.files[0];
+    if (!selectedFile) {
+      previewSection.style.display = 'none';
+      confirmBtn.disabled = true;
+      return;
+    }
+
+    const url = URL.createObjectURL(selectedFile);
+    preview.src = url;
+    preview.onload = () => URL.revokeObjectURL(url);
+
+    previewSection.style.display = 'flex';
+    confirmBtn.disabled = false;
+  });
+
+  confirmBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append('photo', selectedFile);
+
+    confirmBtn.disabled = true;
+    confirmBtn.innerText = 'Yükleniyor...';
+
+    try {
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      console.log("Gelen veri:", result);
+
+      confirmBtn.innerText = 'Onayla';
+      confirmBtn.disabled = false;
+
+      if (result.dominant_color) {
+        resultSection.style.display = 'flex';
+        colorSwatch.style.backgroundColor = result.dominant_color;
+        colorName.innerText = result.color_name;
+      } else {
+        alert("Sunucudan geçerli bir renk verisi dönmedi.");
+      }
+    } catch (error) {
+      console.error("HATA:", error);
+      alert("Sunucuya bağlanırken bir sorun oluştu.");
+      confirmBtn.innerText = 'Onayla';
+      confirmBtn.disabled = false;
+    }
+  });
+});
+</script>
+</body>
+</html>
