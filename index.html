@@ -155,10 +155,14 @@
       left: 16px;
       z-index: 999;
       cursor: pointer;
-      transform: scale(0.75);
-      transform-origin: top left;
-       width: 80%;
-      height: 80%;
+      width: auto;
+      height: auto;
+    }
+
+    #coffee-button img {
+      max-height: 60px;
+      width: auto;
+      display: block;
     }
 
     #coffee-popup {
@@ -184,23 +188,54 @@
       font-size: 1.2rem;
       color: #dc3545;
     }
+
+    @media (max-width: 600px) {
+      #technical-details, #intro-section {
+        padding: 1.2rem;
+      }
+
+      h1, h2 {
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      .file-input, .btn {
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      #coffee-popup {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+      }
+
+      #color-swatch {
+        width: 60px;
+        height: 60px;
+      }
+
+      #preview {
+        max-width: 100%;
+        height: auto;
+      }
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="coffee-button" onclick="document.getElementById('coffee-popup').style.display='block'">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px;">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee">
   </div>
 
   <div id="coffee-popup">
     <span id="coffee-popup-close" onclick="document.getElementById('coffee-popup').style.display='none'">&times;</span>
-    <p>Üniversite için hazırlanırken projeler geliştiriyorum bana ve projelerime destek olursanız sevinirim ♥</p>
+    <p>Üniversite için hazırlanırken projeler geliştiriyorum, bana ve projelerime destek olursanız sevinirim ♥</p>
     <div>
       <script
         type="text/javascript"
         src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
         data-name="bmc-button"
-        data-slug="AhmEfeYSR"
+        data-slug="AhmetEfeYSR"
         data-color="#FFDD00"
         data-emoji=""
         data-font="Lato"
@@ -219,7 +254,7 @@
   <main>
     <section id="intro-section">
       <h2>Fotoğrafınız Nasıl Olmalı:</h2>
-      <p>Hesaplanacak rengin olabildiğince doğru olması için fotoğrafnız üzerinde herhangi bir oynama yapılmamış olmalı ve mümkünse beyaz ışık altında çekilmiş olmalı. Ten renginiz yüzünüzün alın bölgesinde daha net olacağından alın yanak gibi bölgeler makyajsız ve açıkça görünüyor olmalı. Fotoğrafınız python sunucuları haricinde hiç bir yere gönderilmeyecektir veya depolanmayacaktır</p>
+      <p>Hesaplanacak rengin olabildiğince doğru olması için fotoğrafınız üzerinde herhangi bir oynama yapılmamış olmalı ve mümkünse beyaz ışık altında çekilmiş olmalı. Ten renginiz yüzünüzün alın bölgesinde daha net olacağından alın, yanak gibi bölgeler makyajsız ve açıkça görünüyor olmalı. Fotoğrafınız python sunucuları haricinde hiçbir yere gönderilmeyecek veya depolanmayacaktır.</p>
     </section>
 
     <form id="upload-form">
@@ -251,72 +286,73 @@
     <a href="https://github.com/AhmetEfeYSR" target="_blank">
       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" class="github-logo">
     </a>
-    <p>Github hesabıma bu logodan ulaşarak profilimdeki diğer projelere bakabilirsiniz. (bu ilk projem girdiğinizde profil boş olabilir)</p>
+    <p>Github hesabıma bu logodan ulaşarak profilimdeki diğer projelere bakabilirsiniz. (Bu ilk projem, girdiğinizde profil boş olabilir.)</p>
   </footer>
+
   <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const fileInput = document.getElementById('photo-input');
-  const previewSection = document.getElementById('preview-section');
-  const preview = document.getElementById('preview');
-  const confirmBtn = document.getElementById('confirm-btn');
-  const resultSection = document.getElementById('result-section');
-  const colorSwatch = document.getElementById('color-swatch');
-  const colorName = document.getElementById('color-name');
+    document.addEventListener("DOMContentLoaded", () => {
+      const fileInput = document.getElementById('photo-input');
+      const previewSection = document.getElementById('preview-section');
+      const preview = document.getElementById('preview');
+      const confirmBtn = document.getElementById('confirm-btn');
+      const resultSection = document.getElementById('result-section');
+      const colorSwatch = document.getElementById('color-swatch');
+      const colorName = document.getElementById('color-name');
 
-  let selectedFile = null;
+      let selectedFile = null;
 
-  fileInput.addEventListener('change', () => {
-    selectedFile = fileInput.files[0];
-    if (!selectedFile) {
-      previewSection.style.display = 'none';
-      confirmBtn.disabled = true;
-      return;
-    }
+      fileInput.addEventListener('change', () => {
+        selectedFile = fileInput.files[0];
+        if (!selectedFile) {
+          previewSection.style.display = 'none';
+          confirmBtn.disabled = true;
+          return;
+        }
 
-    const url = URL.createObjectURL(selectedFile);
-    preview.src = url;
-    preview.onload = () => URL.revokeObjectURL(url);
+        const url = URL.createObjectURL(selectedFile);
+        preview.src = url;
+        preview.onload = () => URL.revokeObjectURL(url);
 
-    previewSection.style.display = 'flex';
-    confirmBtn.disabled = false;
-  });
-
-  confirmBtn.addEventListener('click', async () => {
-    if (!selectedFile) return;
-
-    const formData = new FormData();
-    formData.append('photo', selectedFile);
-
-    confirmBtn.disabled = true;
-    confirmBtn.innerText = 'Yükleniyor...';
-
-    try {
-      const response = await fetch('/upload', {
-        method: 'POST',
-        body: formData
+        previewSection.style.display = 'flex';
+        confirmBtn.disabled = false;
       });
 
-      const result = await response.json();
-      console.log("Gelen veri:", result);
+      confirmBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
 
-      confirmBtn.innerText = 'Onayla';
-      confirmBtn.disabled = false;
+        const formData = new FormData();
+        formData.append('photo', selectedFile);
 
-      if (result.dominant_color) {
-        resultSection.style.display = 'flex';
-        colorSwatch.style.backgroundColor = result.dominant_color;
-        colorName.innerText = result.color_name;
-      } else {
-        alert("Sunucudan geçerli bir renk verisi dönmedi.");
-      }
-    } catch (error) {
-      console.error("HATA:", error);
-      alert("Sunucuya bağlanırken bir sorun oluştu.");
-      confirmBtn.innerText = 'Onayla';
-      confirmBtn.disabled = false;
-    }
-  });
-});
-</script>
+        confirmBtn.disabled = true;
+        confirmBtn.innerText = 'Yükleniyor...';
+
+        try {
+          const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          const result = await response.json();
+          console.log("Gelen veri:", result);
+
+          confirmBtn.innerText = 'Onayla';
+          confirmBtn.disabled = false;
+
+          if (result.dominant_color) {
+            resultSection.style.display = 'flex';
+            colorSwatch.style.backgroundColor = result.dominant_color;
+            colorName.innerText = result.color_name;
+          } else {
+            alert("Sunucudan geçerli bir renk verisi dönmedi.");
+          }
+        } catch (error) {
+          console.error("HATA:", error);
+          alert("Sunucuya bağlanırken bir sorun oluştu.");
+          confirmBtn.innerText = 'Onayla';
+          confirmBtn.disabled = false;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
